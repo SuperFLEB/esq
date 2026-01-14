@@ -1,7 +1,7 @@
 """
 Clever docstring goes here.
 """
-import ESQ
+from . import ESQ
 
 ESQ = ESQ.ESQ
 
