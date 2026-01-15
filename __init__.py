@@ -1,9 +1,11 @@
 """
 Clever docstring goes here.
 """
+import typing
 from . import ESQ
 
 ESQ = ESQ.ESQ
+ESQStyle: typing.TypeAlias = typing.Callable[[typing.Any], ESQ._ESQBlock]
 
 if __name__ == "__main__":
     emph = ESQ.bright.yellow
