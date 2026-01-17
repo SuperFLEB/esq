@@ -1,7 +1,10 @@
 name: "Release"
 on: [ workflow_dispatch ]
 jobs:
-  Build-and-Release:
+  build-and-release:
+    name: Build and Release
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: If testing with Act, dummy in "gh"
