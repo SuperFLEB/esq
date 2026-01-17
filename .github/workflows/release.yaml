@@ -22,4 +22,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
-        run: gh release create "$tag" --repo="$GITHUB_REPOSITORY" --title="Test release $tag" --generate-notes ; gh release upload "$tag" dist/*.whl
+        run: gh release create --generate-notes --draft --repo="$GITHUB_REPOSITORY" --title="Test release $tag" "$tag" ; gh release upload "$tag" dist/*.whl
