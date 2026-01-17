@@ -21,5 +21,7 @@ jobs:
       - name: Create Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-        run: gh release create --generate-notes --draft --repo="$GITHUB_REPOSITORY" --title="Test release $tag" "$tag" ; gh release upload "$tag" dist/*.whl
+        run: |
+          TAG_NAME=$(git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD) ;
+          gh release create --generate-notes --draft --repo="$GITHUB_REPOSITORY" --title="Test release $TAG_NAME" "$TAG_NAME" ;
+          gh release upload --force "$TAG_NAME" dist/*.whl
