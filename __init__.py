@@ -11,17 +11,17 @@ join = ESQ.join
 ESQ = ESQ.ESQ
 
 if __name__ == "__main__":
-    emph = ESQ.bright.yellow
+    emph = ESQ.bright.cyan.underline
     print(
         ESQ.yellow("⠕") +
         ESQ.bright.red("⪫") +
         ESQ.bright.yellow.ESQ("⁓ESQ⁓") +
         ESQ.bright.red("⪪") +
-        ESQ.yellow("⠪") +
-        ESQ.bright.cyan.italic(
-            emph(" E") + "scape " +
-            emph("S") + "e" + emph("Q") + "uence... " +
-            ESQ.no.italic.white("Uhh...") +
+        ESQ.yellow("⠪ ") +
+        ESQ.cyan.italic(
+            emph("E") + "scape " +
+            emph("S") + "e" + emph("Q") + "uence" +
             " Generator"
         ))
+
     print(__doc__)

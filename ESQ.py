@@ -25,7 +25,7 @@ class _ColorEnum(int, Enum):
     magenta = 6
     cyan = 7
     white = 8
-    light_gray = 8
+    bright_gray = 8
     gray = 9
     bright_black = 9
     bright_red = 10
@@ -207,7 +207,8 @@ class _ESQDirectiveChain:
     """
     directive: _ESQDirective
     kw_on: bool = False
-    kw_not: bool = False
+    kw_no: bool = False
+    kw_bright: bool = False
 
     def __init__(self) -> None:
         self.directive = _ESQDirective(None, None, None, None)
@@ -216,27 +217,36 @@ class _ESQDirectiveChain:
         return _ESQBlock(self.directive, *children)
 
     def __getattr__(self, name: str) -> "_ESQDirectiveChain":
-        if name == "on":
-            self.kw_on = True
-            return self
-        if name == "not":
-            self.kw_not = True
-            return self
+        match name:
+            case "bright":
+                self.kw_bright = True
+                return self
+            case "on":
+                self.kw_on = True
+                return self
+            case "no":
+                self.kw_no = True
+                return self
 
+        # Note to self and others: DON'T refactor these checks into a "match" block. Multiple can be true.
         if self.kw_on:
             self.kw_on = False
             if name in _ColorEnum.__members__:
                 name = f"on_{name}"
 
-        if self.kw_not:
-            self.kw_not = False
+        if self.kw_no:
+            self.kw_no = False
             if name in _FXEnum.__members__:
-                name = f"not_{name}"
+                name = f"no_{name}"
+
+        if self.kw_bright:
+            self.kw_bright = False
+            name = f"bright_{name}"
 
         if name.startswith("on_") and name[3:] in _ColorEnum.__members__:
             self.directive.bg = getattr(_ColorEnum, name[3:])
-        elif name.startswith("not_") and name[4:] in _FXEnum.__members__:
-            self.directive.fxoff = getattr(_FXEnum, name[4:])
+        elif name.startswith("no_") and name[3:] in _FXEnum.__members__:
+            self.directive.fxoff = getattr(_FXEnum, name[3:])
         elif name in _FXEnum.__members__:
             self.directive.fxon = getattr(_FXEnum, name)
         elif name in _ColorEnum.__members__:
