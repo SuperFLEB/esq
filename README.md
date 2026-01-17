@@ -1,4 +1,4 @@
-# ESQ, an EScape Query Generator for Python
+# ESQ, an Escape SeQuence Generator for Python
 https://github.com/SuperFLEB/esq
 
 > *"You know what the world needs? Another ANSI escape-code generator for Python!" -- Absolutely Nobody*
