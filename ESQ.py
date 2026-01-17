@@ -212,7 +212,7 @@ class _ESQDirectiveChain:
     def __init__(self) -> None:
         self.directive = _ESQDirective(None, None, None, None)
 
-    def __call__(self, *children: typing.Any) -> _ESQBlock:
+    def __call__(self, *children: typing.Any) -> "ESQBlock":
         return _ESQBlock(self.directive, *children)
 
     def __getattr__(self, name: str) -> "_ESQDirectiveChain":
@@ -263,6 +263,39 @@ class _ESQ:
     def __getattr__(self, name: str) -> _ESQDirectiveChain:
         return _ESQDirectiveChain().__getattr__(name)
 
+if typing.TYPE_CHECKING:
+    ESQBlock = _ESQBlock
+else:
+    class ESQBlock(_ESQBlock):
+        def __new__(cls):
+            raise Exception("ESQBlock is not meant to be instantiated directly.")
+
+def join(parts: typing.Iterable[str | _ESQBlock], glue: str = "") -> str | ESQBlock:
+    chunks: list[list[str] | _ESQBlock] = []
+    append: bool = False
+    joined: str | _ESQBlock | None = None
+
+    for part in parts:
+        if isinstance(part, _ESQBlock):
+            chunks.append(part)
+            append = False
+        elif append and isinstance(chunks[-1], list):
+            chunks[-1].append(str(part))
+        else:
+            chunks.append([str(part)])
+            append = True
+
+    last_chunk = len(chunks) - 1
+    for idx, chunk in enumerate(chunks):
+        if isinstance(chunk, list):
+            joined_chunk = glue.join(chunk)
+            if glue and idx < last_chunk:
+                joined_chunk += glue
+            joined = (joined or "") + joined_chunk
+        else:
+            joined = chunk if joined is None else joined + chunk
+            if glue and idx != last_chunk:
+                joined += glue
+    return joined
 
 ESQ = _ESQ()
-
