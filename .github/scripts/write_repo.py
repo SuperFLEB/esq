@@ -84,7 +84,7 @@ index = f"""<html lang="en">
         <h1>{pinfo["name"]} repository</h1>
         <p>This URL can be referenced as a <tt>pip</tt> repository to install releases of the {pinfo["name"]} package.</p>
         
-        <code class="block">pip install --index-url <span id="this-site"></span> {package_name_normalized}</code>
+        <code class="block">pip install --index-url <span id="this-site"></span> {pinfo["name"]}</code>
     
         <ul>
             <li><a href="{package_name_normalized}/">{pinfo["name"]}</a></li>
