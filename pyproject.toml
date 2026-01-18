@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools >= 80.0.0", "setuptools-scm >= 9.2.0"]
+requires = ["setuptools >= 80.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -26,5 +26,5 @@ Source = "https://github.com/SuperFLEB/esq"
 Issues = "https://github.com/SuperFLEB/esq/issues"
 Author = "https://flebsite.com"
 
-[tool.setuptools_scm]
-fallback_version = "UNKNOWN"
+[tool.setuptools.dynamic]
+version = {file = "VERSION"}
