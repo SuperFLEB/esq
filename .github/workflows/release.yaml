@@ -39,6 +39,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python .github/scripts/write_repo.py
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-pages-artifact@v3
         with:
             path: './dist_html'
