@@ -8,11 +8,6 @@ jobs:
       pages: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          fetch-tags: true
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
