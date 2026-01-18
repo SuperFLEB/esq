@@ -1,5 +1,5 @@
 # ESQ, an Escape SeQuence Generator for Python
-https://github.com/SuperFLEB/esq
+https://github.com/SuperFLEB/esq | https://superfleb.github.io/esq
 
 > *"You know what the world needs? Another ANSI escape-code generator for Python!" -- Absolutely Nobody*
 
@@ -11,10 +11,20 @@ Okay, it does a couple things different. Maybe it's a bit clever. You be the jud
 
 ## Using the thing
 
-It uses a pretty natural chained format to build styles:
+Install it with:
 
+```shell
+pip install --index-url https://superfleb.github.io/esq fleb.esq
+```
+
+Import it like:
 ```python
-print(ESQ.red.on.blue.underline.blink("This is undoubtedly unreadable, I'm sure."))
+from fleb.esq import ESQ
+```
+
+It uses a pretty natural chained format to build styles:
+```python
+print(ESQ.red.on.blue.underline.blink("This color scheme will be eye-searing, I'm sure."))
 ```
 
 Chain off of the `ESQ` object, and end with a function call, with the body being a string or another `ESQ`. You can also
