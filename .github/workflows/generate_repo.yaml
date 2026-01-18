@@ -1,4 +1,4 @@
-name: "Release"
+name: "Generate pip Repository"
 on: [ workflow_dispatch ]
 jobs:
   generate_repo:
