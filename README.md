@@ -5,7 +5,7 @@ https://github.com/SuperFLEB/esq | https://superfleb.github.io/esq
 
 In the interest of reinventing wheels, I've written another ANSI color escape code generator to throw onto the pile.
 This was originally made to serve as a quick addition to my Blender Addon Template (and other addons), but it makes a
-better submodule so I'm passing the savings along to you.
+better module all its own so I'm passing the savings along to you.
 
 Okay, it does a couple things different. Maybe it's a bit clever. You be the judge.
 
