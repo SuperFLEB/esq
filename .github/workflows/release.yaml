@@ -32,5 +32,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create --generate-notes --draft --repo="$GITHUB_REPOSITORY" --title="$TAG_NAME" "$TAG_NAME" ;
-          gh release upload --clobber "$TAG_NAME" dist/*.whl
+          gh release create --generate-notes --draft --repo="$GITHUB_REPOSITORY" --title="v$VERSION" "v$VERSION" ;
+          gh release upload --clobber "v$VERSION" dist/*.whl
