@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import subprocess as sp
 import tomllib
 
@@ -44,6 +45,8 @@ def get_release_ul():
 pinfo = get_project_info()
 rinfo = get_releases_info()
 
+package_name_normalized = re.sub(r"[-_.]+", "-", pinfo["name"].lower())
+
 detail = f"""<html lang="en">
 <head>
     <title>{pinfo["name"]}</title>
@@ -62,14 +65,15 @@ index = f"""<html lang="en">
     <body>
         <h1>{pinfo["name"]} repository</h1>
         <p>This URL can be referenced as a <tt>pip</tt> repository to install releases of the {pinfo["name"]} package.</p>
-        <a href="{pinfo["name"]}/">{pinfo["name"]}</a>
+        <a href="{package_name_normalized}/">{pinfo["name"]}</a>
     </body>
 </html>"""
 
+
 os.mkdir("dist_html")
-os.mkdir(f"dist_html/{pinfo['name']}")
+os.mkdir(f"dist_html/{package_name_normalized}")
 
 with open("dist_html/index.html", "w") as f:
     f.write(index)
-with open(f"dist_html/{pinfo['name']}/index.html", "w") as f:
+with open(f"dist_html/{package_name_normalized}/index.html", "w") as f:
     f.write(detail)
