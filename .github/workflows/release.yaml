@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.10"
+          python-version: "3.11"
       - name: Get/set version tag
         run: git tag && chmod u+x .github/scripts/get_set_version_tag && VERSION=$(.github/scripts/get_set_version_tag) && echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Push tags (unless testing with Act)
@@ -34,3 +34,9 @@ jobs:
         run: |
           gh release create --generate-notes --draft --repo="$GITHUB_REPOSITORY" --title="v$VERSION" "v$VERSION" ;
           gh release upload --clobber "v$VERSION" dist/*.whl
+      - name: Generate pip repository
+        run: python .github/scripts/write_repo.py
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+            path: './dist_html'

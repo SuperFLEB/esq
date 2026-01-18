@@ -10,7 +10,7 @@ authors = [
   { name="FLEB (a.k.a. SuperFLEB)" },
 ]
 description = "Escape SeQuence Generator: Another ANSI escape-code tool"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Environment :: Console",
