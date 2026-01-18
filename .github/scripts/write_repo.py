@@ -50,6 +50,11 @@ package_name_normalized = re.sub(r"[-_.]+", "-", pinfo["name"].lower())
 detail = f"""<html lang="en">
 <head>
     <title>{pinfo["name"]}</title>
+    <style>
+        ul {{
+            list-style: "\\1F4BC"
+        }}
+    </style>
 </head>
 <body>
     <h1>{pinfo["name"]}</h1>
@@ -62,11 +67,16 @@ index = f"""<html lang="en">
     <head>
         <title>{pinfo["name"]} repository</title>
         <style>
-        code {{
+        code.block {{
+            display: block;
             border: 1px solid #ccc;
             background-color: #eee;
             padding: 1em;
             margin: 1em;
+        }}
+        
+        ul {{
+            list-style: "\\1F4C1";
         }}
         </style>
     </head>
@@ -74,14 +84,14 @@ index = f"""<html lang="en">
         <h1>{pinfo["name"]} repository</h1>
         <p>This URL can be referenced as a <tt>pip</tt> repository to install releases of the {pinfo["name"]} package.</p>
         
-        <code>pip install --index-url <span id="this-site"></span> {package_name_normalized}</code>
+        <code class="block">pip install --index-url <span id="this-site"></span> {package_name_normalized}</code>
+    
+        <ul>
+            <li><a href="{package_name_normalized}/">{pinfo["name"]}</a></li>
+        </ul>
         
-        <a href="{package_name_normalized}/">{pinfo["name"]}</a>
-        
-        <script>
-            document.getElementById("this-site").innerText = window.location.href;
-        </script>
     </body>
+    <script>document.getElementById("this-site").innerText = window.location.href;</script>
 </html>"""
 
 
