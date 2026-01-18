@@ -35,6 +35,8 @@ jobs:
           gh release create --generate-notes --draft --repo="$GITHUB_REPOSITORY" --title="v$VERSION" "v$VERSION" ;
           gh release upload --clobber "v$VERSION" dist/*.whl
       - name: Generate pip repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python .github/scripts/write_repo.py
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
