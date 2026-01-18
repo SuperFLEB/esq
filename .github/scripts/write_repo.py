@@ -61,11 +61,26 @@ detail = f"""<html lang="en">
 index = f"""<html lang="en">
     <head>
         <title>{pinfo["name"]} repository</title>
+        <style>
+        code {{
+            border: 1px solid #ccc;
+            background-color: #eee;
+            padding: 1em;
+            margin: 1em;
+        }}
+        </style>
     </head>
     <body>
         <h1>{pinfo["name"]} repository</h1>
         <p>This URL can be referenced as a <tt>pip</tt> repository to install releases of the {pinfo["name"]} package.</p>
+        
+        <code>pip install --index-url <span id="this-site"></span> {package_name_normalized}</code>
+        
         <a href="{package_name_normalized}/">{pinfo["name"]}</a>
+        
+        <script>
+            document.getElementById("this-site").innerText = window.location.href;
+        </script>
     </body>
 </html>"""
 
