@@ -1,0 +1,8 @@
+name: "Generate pip Repository"
+on: [ workflow_dispatch ]
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Do nothing"
+        run: echo "This workflow intentionally left blank."
