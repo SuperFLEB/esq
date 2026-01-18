@@ -1,11 +1,5 @@
 name: "Release"
-on:
-  workflow_dispatch:
-    inputs:
-      always_build:
-        type: boolean
-        description: 'Build intermediate release if there is no version tag'
-        default: false
+on: [ workflow_dispatch ]
 jobs:
   build-and-release:
     name: Build and Release
