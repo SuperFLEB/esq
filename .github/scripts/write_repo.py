@@ -29,16 +29,16 @@ def get_releases_info():
             continue
         release_data_json = sp.check_output(["gh", "release", "view", release["tagName"], "--json", "name,assets"])
         release_data = json.loads(release_data_json)
-        wheels = [asset["url"] for asset in release_data["assets"] if "url" in asset and asset["url"].endswith('.whl')]
+        wheels = [asset for asset in release_data["assets"] if "url" in asset and asset["url"].endswith('.whl')]
         releases.append({"tag": release["tagName"], "wheels": wheels})
 
     releases_info_cache = releases
     return releases_info_cache
 
+lis = "\n".join(
+    [f"\t\t<li><a href=\"{r['wheels'][0]['url']}\">{r['wheels'][0]['name']}</a></li>" for r in get_releases_info()]
+)
 def get_release_ul():
-    lis = "\n".join(
-        [f"\t\t<li><a href=\"{r['wheels'][0]}\">{r['tag']}</a></li>" for r in get_releases_info()]
-    )
     return f"\t<ul>\n{lis}\t\n\t</ul>"
 
 pinfo = get_project_info()
