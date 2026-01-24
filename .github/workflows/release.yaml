@@ -50,15 +50,17 @@ jobs:
           python-version: "3.11"
       - name: Install build dependencies
         run: pip install -r buildscript/requirements.txt
-      - name: Tag Version
+      - name: Get Next Version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EXPLICIT_VERSION: ${{ github.event.inputs.version }}
           VERSION_BUMP: ${{ github.event.inputs.version_bump }}
           LABEL_BUMP: ${{ github.event.inputs.label_bump }}
-        run: echo "BUILD_VERSION=$(python buildscript/tag_version.py)" >> $GITHUB_ENV
+        run: echo "BUILD_VERSION=$(python buildscript/next_version.py)" >> $GITHUB_ENV
       - name: Build
-        run: python -m build -w
+        run: python -m build -s -w
+      - name: Tag Release
+        run: git tag "v$BUILD_VERSION" && git push origin "v$BUILD_VERSION"
       - name: Make GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

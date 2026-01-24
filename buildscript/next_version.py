@@ -14,6 +14,9 @@ EXPLICIT_VERSION = os.environ.get('EXPLICIT_VERSION') or None
 VERSION_BUMP = os.environ.get('VERSION_BUMP') or None
 LABEL_BUMP = os.environ.get('LABEL_BUMP') or None
 
+VERSION_BUMP = None if VERSION_BUMP == "none" else VERSION_BUMP
+LABEL_BUMP = None if LABEL_BUMP == "none" else LABEL_BUMP
+
 def run(run_args: list[str], **kwargs):
     if ACT:
         print("DRY RUN>>" + " ".join(run_args), file=sys.stderr)
@@ -26,8 +29,5 @@ if EXPLICIT_VERSION is not None:
 else:
     tags = subprocess.run(["git", "tag", "--list", "v*"], capture_output=True, text=True).stdout.strip().split("\n")
     version = bump(get_version(), VERSION_BUMP, LABEL_BUMP, tags)
-
-run(["git", "tag", f"v{version}"])
-run(["git", "push", "origin", f"v{version}"])
 
 print(version)
