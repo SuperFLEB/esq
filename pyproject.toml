@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools >= 80.0.0"]
-build-backend = "setuptools.build_meta"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
 [project]
 dynamic = ["version"]
@@ -10,7 +10,7 @@ authors = [
   { name="FLEB (a.k.a. SuperFLEB)" },
 ]
 description = "Escape SeQuence Generator: Another ANSI escape-code tool"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Environment :: Console",
@@ -26,5 +26,6 @@ Source = "https://github.com/SuperFLEB/esq"
 Issues = "https://github.com/SuperFLEB/esq/issues"
 Author = "https://flebsite.com"
 
-[tool.setuptools.dynamic]
-version = {file = "VERSION"}
+[tool.pdm.version]
+source = "call"
+getter = "buildscript.localutils.version:get_version()"
