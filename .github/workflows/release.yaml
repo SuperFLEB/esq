@@ -20,7 +20,7 @@ on:
         type: choice
         required: true
         description: "Set/increment label"
-        default: 'pre'
+        default: 'none'
         options:
           - none
           - pre
@@ -66,8 +66,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BUILD_VERSION: ${{ env.BUILD_VERSION }}
         run: |
-          gh release create --generate-notes --repo="$GITHUB_REPOSITORY" --title="v$BUILD_VERSION" "v$BUILD_VERSION" dist/* &&
-          gh release upload --repo="$GITHUB_REPOSITORY" "v$BUILD_VERSION" dist/*.whl dist/*.tar.gz
+          gh release create --generate-notes --repo="$GITHUB_REPOSITORY" --title="v$BUILD_VERSION" "v$BUILD_VERSION" dist/*.whl dist/*.tar.gz
       - name: Publish locally
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
