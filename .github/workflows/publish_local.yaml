@@ -1,7 +1,7 @@
-name: "Generate pip Repository"
-on: [ workflow_dispatch ]
+name: "Pages Publish"
+on: ['workflow_dispatch']
 jobs:
-  generate_repo:
+  publish-local:
     name: Generate pip repository
     permissions:
       id-token: write
