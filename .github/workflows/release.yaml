@@ -59,6 +59,8 @@ jobs:
         run: echo "BUILD_VERSION=$(python buildscript/next_version.py)" >> $GITHUB_ENV
       - name: Build
         run: python -m build -s -w
+      - name: Verify that there are actually Python files in the wheel
+        run: test -n "$(find dist -name *.whl -exec sh -c 'unzip -l {} | grep -q \\.py$' \; -print)"
       - name: Tag Release
         run: git tag "v$BUILD_VERSION" && git push origin "v$BUILD_VERSION"
       - name: Make GitHub Release

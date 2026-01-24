@@ -4,7 +4,7 @@ build-backend = "pdm.backend"
 
 [project]
 dynamic = ["version"]
-name = "fleb.esq"
+name = "fleb-esq"
 keywords = ["ANSI", "VT100", "color", "terminal"]
 authors = [
   { name="FLEB (a.k.a. SuperFLEB)" },
@@ -25,6 +25,10 @@ Homepage = "https://github.com/SuperFLEB/esq"
 Source = "https://github.com/SuperFLEB/esq"
 Issues = "https://github.com/SuperFLEB/esq/issues"
 Author = "https://flebsite.com"
+
+[tool.pdm.build]
+package-dir = "src"
+includes = ["src/fleb"]
 
 [tool.pdm.version]
 source = "call"
