@@ -49,7 +49,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install build dependencies
-        run: pip install -r buildscript/requirements.txt
+        run: pip install -r buildscript/requirements.d/build.txt -r buildscript/requirements.d/write_repo.txt
       - name: Get Next Version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
