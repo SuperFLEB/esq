@@ -1,0 +1,38 @@
+name: "Pages Publish"
+on: [workflow_dispatch]
+jobs:
+  publish-local:
+    name: Publish All Releases on Pages
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: If testing with Act, dummy in "gh"
+        if: ${{ env.ACT }}
+        run: echo -e "#!/usr/bin/env bash\necho Right now I would be running \"gh \$@\"" > /usr/local/bin/gh ; chmod +x /usr/local/bin/gh
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Install build dependencies
+        run: pip install -r buildscript/requirements.d/write_repo.txt
+      - name: Publish locally
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python buildscript/write_repo.py
+      - name: Upload pip repository artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+            path: './dist_html'
+      - name: Deploy pip repository to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: deployment
+        uses: actions/deploy-pages@v4
