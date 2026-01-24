@@ -8,7 +8,7 @@ try:
 except ModuleNotFoundError:
     import tomli as tomllib
 
-ACT = os.environ.get("ACT") is not None
+ACT = os.environ.get("ACT") or None
 
 project_info_cache = None
 releases_info_cache = None
@@ -42,9 +42,12 @@ def get_releases_info():
     releases_info_cache = releases
     return releases_info_cache
 
+
+releases_info = get_releases_info()
 lis = "\n".join(
-    [f"\t\t<li><a href=\"{r['wheels'][0]['url']}\">{r['wheels'][0]['name']}</a></li>" for r in get_releases_info()]
+    [f"\t\t<li><a href=\"{r['wheels'][0]['url']}\">{r['wheels'][0]['name']}</a></li>" for r in releases_info]
 )
+
 def get_release_ul():
     return f"\t<ul>\n{lis}\t\n\t</ul>"
 
