@@ -91,8 +91,6 @@ But, hey, you didn't pay much and there _are_ a lot of options. Lookit 'em all!
 These can be used as foreground colors-- just say the name-- or as background colors by adding `on.` or `on_`. The
 "bright" variation can also be chained with `bright.` or prefixed with `bright_` (see "modifiers" below).
 
-
-
 ### Modifiers
 
 Subject modifiers (don't type the angle brackets). Subject modifiers can chain with a `.` or be `_` prefixes on
@@ -129,7 +127,7 @@ ESQ.underline("And sometimes you just" + ESQ.no.underline(" need a break from al
 
 ## Utility Functions
 
-(The title's a lie, there's only one. It's `join`.)
+(That plural's a lie, there's only one. It's `join`.)
 
 ### `join(list[str | ESQBlock], str?)`
 
@@ -149,4 +147,89 @@ rainbow = [
 ]
 
 print(join(rainbow, " and "))
+```
+
+## Mode
+
+By default, ESQ will generate escape codes if STDOUT is a terminal, and will suppress them (print without any codes) if
+it is not. It will also jostle the Windows terminal into shape by turning on Virtual Terminal Mode when running in
+Windows. (If you don't know what that all means-- it's just a way to make ANSI codes work on some Windows terminals,
+such as Git Bash.)
+
+This behavior can be overridden, though, with the `mode` submodule.
+
+```python
+from esq import mode
+```
+
+What will that get you? A bunch of switches that you usually don't need to twiddle with, but they're there to play with
+if you're finicky.
+
+## Mode Values
+
+These Enum values denote the different modes.
+
+- `mode.DISABLED` - ESQ will **not** generate escape codes, regardless of output type.
+- `mode.AUTO` - ESQ will detect the output type and generate escape codes if appropriate.
+- `mode.ENABLED` - ESQ will **always** generate escape codes, regardless of output type.
+
+## `mode.set(<mode.DISABLED | mode.ENABLED | mode.AUTO>)`
+
+Set the mode. ESQ starts in mode.AUTO and will detect non-TTY STDOUT automatically. You only need to call this if
+you want to override that behavior.
+
+```python
+from esq import ESQ, mode
+
+mode.set(mode.DISABLED)
+print(ESQ.red.on.red("No matter how red I make this, it won't be red."))
+```
+
+## `mode.get()`
+
+This returns either `mode.DISABLED` or `mode.ENABLED`, resolving `mode.AUTO` to the actual mode.
+
+```python
+from esq import ESQ, mode
+
+# Keep in mind that this only returns mode.ENABLED or mode.DISABLED, so a simple if/else suffices.
+if mode.get() == mode.ENABLED:
+    print(ESQ.green("Full color!"))
+else:
+    print("Boring text.")
+```
+
+## `mode.init()`
+
+This initializes the terminal to turn on features necessary to properly support ANSI codes. This happens automatically
+whenever ESQ generates an escape code. If it is called after a previous `init()` (but before a `revert()`), it will
+do nothing.
+
+```python
+from esq import ESQ, mode
+
+mode.init()
+print(ESQ.red("That was wholly unnecessary, because the first time it hits the \"red\" color code it'll do that anyway."))
+```
+
+## `mode.revert()`
+
+This undoes the initialization done by `mode.init()`. This will run automatically when the program exits.
+
+This does **not** change the mode setting, and a subsequent call to ESQ may re-`init()` the terminal if the terminal
+type and mode setting should necessitate it.
+
+```python
+from esq import ESQ, mode
+
+# If we were on some two-bit Windows terminal that needs a kick in the rear to get its ANSI on, then...
+print("\033[31mThis would show escape-code garbage, because I'm adding the codes manually and we haven't run init().\033[0m")
+mode.init()
+print("\033[31mThis would be red, since I called init().\033[0m")
+mode.revert()
+print("\033[31mThis would go back to showing escape-code garbage, because I called revert().\033[0m")
+
+print(ESQ.red("This would always show red, because ESQ calls init() automatically"))
+
+# (...and revert() will be called automatically when the program exits so the parent process doesn't get a screwy terminal.)
 ```

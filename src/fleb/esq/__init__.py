@@ -3,7 +3,9 @@ Clever docstring goes here.
 """
 import typing
 from . import ESQ
+from . import mode
 
+Mode = mode.Mode
 ESQStyle: typing.TypeAlias = typing.Callable[[typing.Any], ESQ.ESQBlock]
 ESQBlock = ESQ.ESQBlock
 join = ESQ.join

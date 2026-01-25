@@ -2,6 +2,7 @@ import typing
 import os
 from enum import Enum
 from typing import Any, Generator
+from .mode import *
 
 _ESC = "\033"
 # Lists of escape codes for each color/style
@@ -98,6 +99,8 @@ class _ESQDirective:
         self.fxoff = fxoff.value if isinstance(fxoff, _FXEnum) else fxoff
 
     def esc(self) -> str:
+        if get() == Mode.DISABLED: return ""
+
         codes = []
         if self.fg is not None:
             codes.append(_escape_sequences[0][self.fg.value])
@@ -211,6 +214,7 @@ class _ESQDirectiveChain:
     kw_bright: bool = False
 
     def __init__(self) -> None:
+        init()
         self.directive = _ESQDirective(None, None, None, None)
 
     def __call__(self, *children: typing.Any) -> "ESQBlock":
