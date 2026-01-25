@@ -1,5 +1,5 @@
 # ESQ, an Escape SeQuence Generator for Python
-https://github.com/SuperFLEB/esq | https://superfleb.github.io/esq | `pip install fleb.esq`
+https://github.com/SuperFLEB/esq | https://superfleb.github.io/esq | `pip install fleb-esq`
 
 > *"You know what the world needs? Another ANSI escape-code generator for Python!" -- Absolutely Nobody*
 
@@ -14,7 +14,7 @@ Okay, it does a couple things different. Maybe it's a bit clever. You be the jud
 Install it with:
 
 ```shell
-pip install fleb.esq
+pip install fleb-esq
 ```
 
 Import it like:
